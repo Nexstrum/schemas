@@ -8,14 +8,6 @@
 			"type": "string",
 			"description": "Path to the schema file"
 		},
-		"projectName": {
-			"type": "string",
-			"description": "The name of the project type (defines the templates to use)"
-		},
-		"variantName": {
-			"type": "string",
-			"description": "The name of the currently in-use variant"
-		},
 		"injectedProperties": {
 			"type": "object",
 			"description": "The injected properties (such as answers to prompts, and custom properties)",
@@ -45,6 +37,6 @@
 			}
 		}
 	},
-	"required": ["projectName", "variantName", "injectedProperties"],
+	"required": ["injectedProperties"],
 	"additionalProperties": false
 }
