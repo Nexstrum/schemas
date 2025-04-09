@@ -4,6 +4,31 @@
 	"description": "Configuration for workspace projects and their dependencies",
 	"type": "object",
 	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Path to the schema file"
+		},
+		"injectedProperties": {
+			"type": "object",
+			"description": "Properties to inject that provide values for prompts and property injections into templates.",
+			"additionalProperties": {
+				"oneOf": [
+					{
+						"type": "string",
+						"description": "An injected property that will override a prompt and be injected into templates."
+					},
+					{
+						"type": "array",
+						"description": "An array of strings for an injected property that will override a prompt and be injected into templates.",
+						"items": {
+							"type": "string",
+							"description": "A single string within the array of strings that make up the injected property"
+						}
+
+					}
+				]
+			}
+		},
 		"projects": {
 			"type": "object",
 			"description": "Projects that can be created",
@@ -37,19 +62,8 @@
 							"properties": {
 								"type": {
 									"type": "string",
-									"description": "Type of prompt input",
-									"enum": [
-										"text",
-										"password",
-										"invisible",
-										"number",
-										"confirm",
-										"list",
-										"toggle",
-										"select",
-										"multiselect",
-										"autocomplete"
-									]
+									"description": "Data type of prompt input",
+									"enum": ["text", "multitext", "password", "invisible", "number", "confirm", "list", "toggle", "select", "multiselect", "autocomplete"]
 								},
 								"name": {
 									"type": "string",
@@ -86,7 +100,8 @@
 									}
 								}
 							},
-							"required": ["type", "name", "message"]
+							"required": ["type", "name", "message"],
+							"additionalProperties": false
 						}
 					},
 					"templates": {
@@ -122,7 +137,8 @@
 									"description": "Path where the repository should be cloned"
 								}
 							},
-							"required": ["repository", "path"]
+							"required": ["repository", "path"],
+							"additionalProperties": false
 						}
 					},
 					"install": {
@@ -159,7 +175,8 @@
 							}
 						]
 					}
-				}
+				},
+				"additionalProperties": false
 			}
 		},
 		"repositories": {
@@ -203,5 +220,6 @@
 				"required": ["url", "variants"]
 			}
 		}
-	}
+	},
+	"additionalProperties": false
 }

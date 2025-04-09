@@ -4,38 +4,47 @@
 	"description": "Lock file that stores the current configuration for a project",
 	"type": "object",
 	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Path to the schema file"
+		},
 		"projectName": {
 			"type": "string",
 			"description": "The name of the project type (defines the templates to use)"
-		},
-		"appName": {
-			"type": "string",
-			"description": "The name of the app"
 		},
 		"variantName": {
 			"type": "string",
 			"description": "The name of the currently in-use variant"
 		},
-		"prompts": {
+		"injectedProperties": {
 			"type": "object",
-			"description": "The prompts that were asked during creation of the project",
+			"description": "The injected properties (such as answers to prompts, and custom properties)",
 			"additionalProperties": {
 				"oneOf": [
 					{
+						"type": "array",
+						"description": "Multiline (string) injected property",
+						"items": {
+							"type": "string",
+							"description": "String injected property"
+						}
+					},
+					{
 						"type": "string",
-						"description": "String prompt response"
+						"description": "String injected property"
 					},
 					{
 						"type": "number",
-						"description": "Numeric prompt response"
+						"description": "Numeric injected property"
 					},
 					{
 						"type": "boolean",
-						"description": "Boolean prompt response"
+						"description": "Boolean injected property"
 					}
 				]
 			}
 		}
 	},
-	"required": ["projectName", "appName", "variantName", "prompts"]
+	"required": ["projectName", "variantName", "injectedProperties"],
+	"additionalProperties": false
 }
