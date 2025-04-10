@@ -167,43 +167,43 @@
 							"required": ["type", "name", "message"],
 							"additionalProperties": false
 						}
-					}
-				},
-				"runOnCreate": {
-					"description": "Command(s) to run after creating a project/app",
-					"oneOf": [
-						{
-							"type": "string",
-							"description": "Command to run after creating a project/app"
-						},
-						{
-							"type": "array",
-							"description": "List of commands to run after creating a project/app",
-							"items": {
+					},
+					"runOnCreate": {
+						"description": "Command(s) to run after creating a project/app",
+						"oneOf": [
+							{
 								"type": "string",
 								"description": "Command to run after creating a project/app"
+							},
+							{
+								"type": "array",
+								"description": "List of commands to run after creating a project/app",
+								"items": {
+									"type": "string",
+									"description": "Command to run after creating a project/app"
+								}
 							}
-						}
-					]
-				},
-				"runOnUpdate": {
-					"description": "Command(s) to run after an update",
-					"oneOf": [
-						{
-							"type": "string",
-							"description": "Command to run after an update"
-						},
-						{
-							"type": "array",
-							"description": "List of commands to run after an update",
-							"items": {
+						]
+					},
+					"runOnUpdate": {
+						"description": "Command(s) to run after an update",
+						"oneOf": [
+							{
 								"type": "string",
 								"description": "Command to run after an update"
+							},
+							{
+								"type": "array",
+								"description": "List of commands to run after an update",
+								"items": {
+									"type": "string",
+									"description": "Command to run after an update"
+								}
 							}
-						}
-					]
-				},
-				"additionalProperties": false
+						]
+					},
+					"additionalProperties": false
+				}
 			}
 		},
 		"repositories": {
