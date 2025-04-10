@@ -24,7 +24,6 @@
 							"type": "string",
 							"description": "A single string within the array of strings that make up the injected property"
 						}
-
 					}
 				]
 			}
@@ -73,23 +72,6 @@
 							"additionalProperties": false
 						}
 					},
-					"install": {
-						"description": "The command(s) to run to install the project after cloning the repository",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single install command"
-							},
-							{
-								"type": "array",
-								"description": "List of install commands",
-								"items": {
-									"type": "string",
-									"description": "Individual install command"
-								}
-							}
-						]
-					},
 					"variants": {
 						"description": "Variants that are available for the project (maps to branches in the repositories section)",
 						"oneOf": [
@@ -128,7 +110,20 @@
 								"type": {
 									"type": "string",
 									"description": "Data type of prompt input",
-									"enum": ["text", "multitext", "password", "invisible", "number", "confirm", "list", "toggle", "select", "multiselect", "autocomplete", "hidden"]
+									"enum": [
+										"text",
+										"multitext",
+										"password",
+										"invisible",
+										"number",
+										"confirm",
+										"list",
+										"toggle",
+										"select",
+										"multiselect",
+										"autocomplete",
+										"hidden"
+									]
 								},
 								"name": {
 									"type": "string",
@@ -174,23 +169,41 @@
 						}
 					}
 				},
-				"install": {
-					"description": "The command(s) to run to install the repository after cloning",
+				"runOnCreate": {
+					"description": "Command(s) to run after creating a project/app",
 					"oneOf": [
 						{
 							"type": "string",
-							"description": "Single install command"
+							"description": "Command to run after creating a project/app"
 						},
 						{
 							"type": "array",
-							"description": "List of install commands",
+							"description": "List of commands to run after creating a project/app",
 							"items": {
 								"type": "string",
-								"description": "Individual install command"
+								"description": "Command to run after creating a project/app"
 							}
 						}
 					]
-				}
+				},
+				"runOnUpdate": {
+					"description": "Command(s) to run after an update",
+					"oneOf": [
+						{
+							"type": "string",
+							"description": "Command to run after an update"
+						},
+						{
+							"type": "array",
+							"description": "List of commands to run after an update",
+							"items": {
+								"type": "string",
+								"description": "Command to run after an update"
+							}
+						}
+					]
+				},
+				"additionalProperties": false
 			}
 		},
 		"repositories": {
@@ -212,9 +225,27 @@
 							"type": "string",
 							"description": "Branch name for the variant"
 						}
+					},
+					"runOnChange": {
+						"description": "Command(s) to run after cloning, pulling or checking outa dependent repository",
+						"oneOf": [
+							{
+								"type": "string",
+								"description": "Command to run after cloning, pulling or checking out a dependent repository"
+							},
+							{
+								"type": "array",
+								"description": "List of commands to run after cloning, pulling or checking out a dependent repository",
+								"items": {
+									"type": "string",
+									"description": "Command to run after cloning, pulling or checking out a dependent repository"
+								}
+							}
+						]
 					}
 				},
-				"required": ["url", "variants"]
+				"required": ["url", "variants"],
+				"additionalProperties": false
 			}
 		}
 	},
