@@ -6,7 +6,7 @@ The JSON schema files should be referenced as (using `workspaces.schema.json` as
 
 ```json
 {
-	"$schema": "https://nexstrum.github.io/schemas/workspace-builder/v1/workspaces.schema.json"
+	"$schema": "https://nexstrum.github.io/schemas/nex-workspace/v1/workspaces.schema.json"
 }
 ```
 
@@ -14,5 +14,7 @@ The JSON schema files should be referenced as (using `workspaces.schema.json` as
 
 ### Workspace builder:
 
--   `workspaces.json`: [https://nexstrum.github.io/schemas/workspace-builder/v1/workspaces.schema.json](https://nexstrum.github.io/schemas/workspace-builder/v1/workspaces.schema.json)
--   `workspace.lock.json`: [https://nexstrum.github.io/schemas/workspace-builder/v1/workspace.lock.schema.json](https://nexstrum.github.io/schemas/workspace-builder/v1/workspace.lock.schema.json)
+-   `workspaces.json`:
+    [https://nexstrum.github.io/schemas/nex-workspace/v1/workspaces.schema.json](https://nexstrum.github.io/schemas/nex-workspace/v1/workspaces.schema.json)
+-   `workspace.lock.json`:
+    [https://nexstrum.github.io/schemas/nex-workspace/v1/workspace.lock.schema.json](https://nexstrum.github.io/schemas/nex-workspace/v1/workspace.lock.schema.json)
