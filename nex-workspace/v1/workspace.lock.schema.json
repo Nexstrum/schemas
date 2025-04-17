@@ -4,38 +4,56 @@
 	"description": "Lock file that stores the current configuration for a project",
 	"type": "object",
 	"properties": {
-		"projectName": {
+		"$schema": {
 			"type": "string",
-			"description": "The name of the project type (defines the templates to use)"
+			"description": "Path to the schema file"
 		},
-		"appName": {
-			"type": "string",
-			"description": "The name of the app"
+		"templates": {
+			"description": "The templates that should be applied to this project",
+			"oneOf": [
+				{
+					"type": "string",
+					"description": "Single template name"
+				},
+				{
+					"type": "array",
+					"description": "List of template names",
+					"items": {
+						"type": "string",
+						"description": "Individual template name"
+					}
+				}
+			]
 		},
-		"variantName": {
-			"type": "string",
-			"description": "The name of the currently in-use variant"
-		},
-		"prompts": {
+		"injectedProperties": {
 			"type": "object",
-			"description": "The prompts that were asked during creation of the project",
+			"description": "The injected properties (such as answers to prompts, and custom properties)",
 			"additionalProperties": {
 				"oneOf": [
 					{
+						"type": "array",
+						"description": "Multiline (string) injected property",
+						"items": {
+							"type": "string",
+							"description": "String injected property"
+						}
+					},
+					{
 						"type": "string",
-						"description": "String prompt response"
+						"description": "String injected property"
 					},
 					{
 						"type": "number",
-						"description": "Numeric prompt response"
+						"description": "Numeric injected property"
 					},
 					{
 						"type": "boolean",
-						"description": "Boolean prompt response"
+						"description": "Boolean injected property"
 					}
 				]
 			}
 		}
 	},
-	"required": ["projectName", "appName", "variantName", "prompts"]
+	"required": ["injectedProperties"],
+	"additionalProperties": false
 }

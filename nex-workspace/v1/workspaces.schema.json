@@ -4,29 +4,80 @@
 	"description": "Configuration for workspace projects and their dependencies",
 	"type": "object",
 	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Path to the schema file"
+		},
+		"injectedProperties": {
+			"type": "object",
+			"description": "Property name to inject that provide values injections into templates.",
+			"additionalProperties": {
+				"oneOf": [
+					{
+						"type": "string",
+						"description": "The description of the project, shown during create when selecting a project."
+					},
+					{
+						"type": "array",
+						"description": "An array of strings for an injected property that will override a prompt and be injected into templates.",
+						"items": {
+							"type": "string",
+							"description": "A single string within the array of strings that make up the injected property"
+						}
+					}
+				]
+			}
+		},
 		"projects": {
 			"type": "object",
 			"description": "Projects that can be created",
 			"additionalProperties": {
 				"type": "object",
-				"description": "Project configuration",
+				"description": "Project name",
 				"properties": {
-					"tags": {
-						"description": "Tags that are passed to esj for template file generation",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single tag for the project"
-							},
-							{
-								"type": "array",
-								"description": "List of tags for the project",
-								"items": {
+					"description": {
+						"description": "Description of the project",
+						"type": "string"
+					},
+					"template": {
+						"description": "The template that should be applied to this project",
+						"type": "string"
+					},
+					"dependencies": {
+						"description": "Repositories that are dependencies of the project",
+						"type": "array",
+						"items": {
+							"type": "object",
+							"description": "Dependency configuration",
+							"properties": {
+								"repository": {
 									"type": "string",
-									"description": "Individual tag"
+									"description": "URL of the Git repository"
+								},
+								"path": {
+									"type": "string",
+									"description": "Path where the repository should be cloned (relative to the active project)"
 								}
-							}
-						]
+							},
+							"required": ["repository", "path"],
+							"additionalProperties": false
+						}
+					}
+				},
+				"required": ["template"],
+				"additionalProperties": false
+			}
+		},
+		"templates": {
+			"type": "object",
+			"description": "Templates that are available to be used in the projects",
+			"additionalProperties": {
+				"type": "object",
+				"description": "Template name",
+				"properties": {
+					"inherit": {
+						"description": "Template that should be inherited from",
+						"type": "string"
 					},
 					"prompts": {
 						"description": "Prompts that will be asked on creation (unless already defined as properties in the project json)",
@@ -37,9 +88,10 @@
 							"properties": {
 								"type": {
 									"type": "string",
-									"description": "Type of prompt input",
+									"description": "Data type of prompt input",
 									"enum": [
 										"text",
+										"multitext",
 										"password",
 										"invisible",
 										"number",
@@ -48,7 +100,8 @@
 										"toggle",
 										"select",
 										"multiselect",
-										"autocomplete"
+										"autocomplete",
+										"hidden"
 									]
 								},
 								"name": {
@@ -58,6 +111,10 @@
 								"message": {
 									"type": "string",
 									"description": "Message to display to the user"
+								},
+								"dropOnCreate": {
+									"type": "boolean",
+									"description": "If true, the saved value (from the project lock file) will be dropped from being available as a default on new project creates"
 								},
 								"initial": {
 									"type": ["boolean", "string", "number"],
@@ -86,122 +143,15 @@
 									}
 								}
 							},
-							"required": ["type", "name", "message"]
+							"required": ["type", "name", "message"],
+							"additionalProperties": false
 						}
-					},
-					"templates": {
-						"description": "The templates that should be applied to this project",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single template name"
-							},
-							{
-								"type": "array",
-								"description": "List of template names",
-								"items": {
-									"type": "string",
-									"description": "Individual template name"
-								}
-							}
-						]
-					},
-					"dependencies": {
-						"description": "Repositories that are dependencies of the project",
-						"type": "array",
-						"items": {
-							"type": "object",
-							"description": "Dependency configuration",
-							"properties": {
-								"repository": {
-									"type": "string",
-									"description": "Name of the repository dependency"
-								},
-								"path": {
-									"type": "string",
-									"description": "Path where the repository should be cloned"
-								}
-							},
-							"required": ["repository", "path"]
-						}
-					},
-					"install": {
-						"description": "The command(s) to run to install the project after cloning the repository",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single install command"
-							},
-							{
-								"type": "array",
-								"description": "List of install commands",
-								"items": {
-									"type": "string",
-									"description": "Individual install command"
-								}
-							}
-						]
-					},
-					"variants": {
-						"description": "Variants that are available for the project (maps to branches in the repositories section)",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single variant name"
-							},
-							{
-								"type": "array",
-								"description": "List of variant names",
-								"items": {
-									"type": "string",
-									"description": "Individual variant name"
-								}
-							}
-						]
-					}
-				}
-			}
-		},
-		"repositories": {
-			"type": "object",
-			"description": "Repositories that are available to be used in the projects",
-			"additionalProperties": {
-				"type": "object",
-				"description": "Repository configuration",
-				"properties": {
-					"url": {
-						"type": "string",
-						"format": "uri",
-						"description": "URL of the repository"
-					},
-					"variants": {
-						"type": "object",
-						"description": "Mapping of variant names to branch names",
-						"additionalProperties": {
-							"type": "string",
-							"description": "Branch name for the variant"
-						}
-					},
-					"install": {
-						"description": "The command(s) to run to install the repository after cloning",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single install command"
-							},
-							{
-								"type": "array",
-								"description": "List of install commands",
-								"items": {
-									"type": "string",
-									"description": "Individual install command"
-								}
-							}
-						]
 					}
 				},
-				"required": ["url", "variants"]
+				"additionalProperties": false
 			}
-		}
-	}
+		},
+		"additionalProperties": false
+	},
+	"additionalProperties": false
 }
