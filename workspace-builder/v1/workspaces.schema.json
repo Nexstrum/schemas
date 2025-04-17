@@ -10,12 +10,12 @@
 		},
 		"injectedProperties": {
 			"type": "object",
-			"description": "Properties to inject that provide values for prompts and property injections into templates.",
+			"description": "Property name to inject that provide values injections into templates.",
 			"additionalProperties": {
 				"oneOf": [
 					{
 						"type": "string",
-						"description": "An injected property that will override a prompt and be injected into templates."
+						"description": "The description of the project, shown during create when selecting a project."
 					},
 					{
 						"type": "array",
@@ -33,24 +33,15 @@
 			"description": "Projects that can be created",
 			"additionalProperties": {
 				"type": "object",
-				"description": "Project configuration",
+				"description": "Project name",
 				"properties": {
-					"templates": {
-						"description": "The templates that should be applied to this project",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single template name"
-							},
-							{
-								"type": "array",
-								"description": "List of template names",
-								"items": {
-									"type": "string",
-									"description": "Individual template name"
-								}
-							}
-						]
+					"description": {
+						"description": "Description of the project",
+						"type": "string"
+					},
+					"template": {
+						"description": "The template that should be applied to this project",
+						"type": "string"
 					},
 					"dependencies": {
 						"description": "Repositories that are dependencies of the project",
@@ -61,35 +52,19 @@
 							"properties": {
 								"repository": {
 									"type": "string",
-									"description": "Name of the repository dependency"
+									"description": "URL of the Git repository"
 								},
 								"path": {
 									"type": "string",
-									"description": "Path where the repository should be cloned"
+									"description": "Path where the repository should be cloned (relative to the active project)"
 								}
 							},
 							"required": ["repository", "path"],
 							"additionalProperties": false
 						}
-					},
-					"variants": {
-						"description": "Variants that are available for the project (maps to branches in the repositories section)",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Single variant name"
-							},
-							{
-								"type": "array",
-								"description": "List of variant names",
-								"items": {
-									"type": "string",
-									"description": "Individual variant name"
-								}
-							}
-						]
 					}
 				},
+				"required": ["template"],
 				"additionalProperties": false
 			}
 		},
@@ -98,8 +73,12 @@
 			"description": "Templates that are available to be used in the projects",
 			"additionalProperties": {
 				"type": "object",
-				"description": "Template configuration",
+				"description": "Template name",
 				"properties": {
+					"inherit": {
+						"description": "Template that should be inherited from",
+						"type": "string"
+					},
 					"prompts": {
 						"description": "Prompts that will be asked on creation (unless already defined as properties in the project json)",
 						"type": "array",
@@ -167,87 +146,12 @@
 							"required": ["type", "name", "message"],
 							"additionalProperties": false
 						}
-					},
-					"runOnCreate": {
-						"description": "Command(s) to run after creating a project/app",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Command to run after creating a project/app"
-							},
-							{
-								"type": "array",
-								"description": "List of commands to run after creating a project/app",
-								"items": {
-									"type": "string",
-									"description": "Command to run after creating a project/app"
-								}
-							}
-						]
-					},
-					"runOnUpdate": {
-						"description": "Command(s) to run after an update",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Command to run after an update"
-							},
-							{
-								"type": "array",
-								"description": "List of commands to run after an update",
-								"items": {
-									"type": "string",
-									"description": "Command to run after an update"
-								}
-							}
-						]
-					},
-					"additionalProperties": false
-				}
-			}
-		},
-		"repositories": {
-			"type": "object",
-			"description": "Repositories that are available to be used in the projects",
-			"additionalProperties": {
-				"type": "object",
-				"description": "Repository configuration",
-				"properties": {
-					"url": {
-						"type": "string",
-						"format": "uri",
-						"description": "URL of the repository"
-					},
-					"variants": {
-						"type": "object",
-						"description": "Mapping of variant names to branch names",
-						"additionalProperties": {
-							"type": "string",
-							"description": "Branch name for the variant"
-						}
-					},
-					"runOnChange": {
-						"description": "Command(s) to run after cloning, pulling or checking outa dependent repository",
-						"oneOf": [
-							{
-								"type": "string",
-								"description": "Command to run after cloning, pulling or checking out a dependent repository"
-							},
-							{
-								"type": "array",
-								"description": "List of commands to run after cloning, pulling or checking out a dependent repository",
-								"items": {
-									"type": "string",
-									"description": "Command to run after cloning, pulling or checking out a dependent repository"
-								}
-							}
-						]
 					}
 				},
-				"required": ["url", "variants"],
 				"additionalProperties": false
 			}
-		}
+		},
+		"additionalProperties": false
 	},
 	"additionalProperties": false
 }

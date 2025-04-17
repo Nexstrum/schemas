@@ -8,6 +8,23 @@
 			"type": "string",
 			"description": "Path to the schema file"
 		},
+		"templates": {
+			"description": "The templates that should be applied to this project",
+			"oneOf": [
+				{
+					"type": "string",
+					"description": "Single template name"
+				},
+				{
+					"type": "array",
+					"description": "List of template names",
+					"items": {
+						"type": "string",
+						"description": "Individual template name"
+					}
+				}
+			]
+		},
 		"injectedProperties": {
 			"type": "object",
 			"description": "The injected properties (such as answers to prompts, and custom properties)",
