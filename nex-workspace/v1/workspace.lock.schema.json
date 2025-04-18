@@ -8,23 +8,6 @@
 			"type": "string",
 			"description": "Path to the schema file"
 		},
-		"templates": {
-			"description": "The templates that should be applied to this project",
-			"oneOf": [
-				{
-					"type": "string",
-					"description": "Single template name"
-				},
-				{
-					"type": "array",
-					"description": "List of template names",
-					"items": {
-						"type": "string",
-						"description": "Individual template name"
-					}
-				}
-			]
-		},
 		"injectedProperties": {
 			"type": "object",
 			"description": "The injected properties (such as answers to prompts, and custom properties)",
@@ -51,6 +34,43 @@
 						"description": "Boolean injected property"
 					}
 				]
+			}
+		},
+		"templates": {
+			"description": "The templates that should be applied to this project",
+			"oneOf": [
+				{
+					"type": "string",
+					"description": "Single template name"
+				},
+				{
+					"type": "array",
+					"description": "List of template names",
+					"items": {
+						"type": "string",
+						"description": "Individual template name"
+					}
+				}
+			]
+		},
+		"dependencies": {
+			"description": "Repositories that are dependencies of the project",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"description": "Dependency configuration",
+				"properties": {
+					"repository": {
+						"type": "string",
+						"description": "URL of the Git repository"
+					},
+					"path": {
+						"type": "string",
+						"description": "Path where the repository should be cloned (relative to the active project)"
+					}
+				},
+				"required": ["repository", "path"],
+				"additionalProperties": false
 			}
 		}
 	},
