@@ -57,6 +57,10 @@
 								"path": {
 									"type": "string",
 									"description": "Path where the repository should be cloned (relative to the active project)"
+								},
+								"branch": {
+									"type": "string",
+									"description": "Optional branch to check out"
 								}
 							},
 							"required": ["repository", "path"],
