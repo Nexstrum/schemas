@@ -61,6 +61,17 @@
 								"branch": {
 									"type": "string",
 									"description": "Optional branch to check out"
+								},
+								"scripts": {
+									"type": "object",
+									"description": "Scripts to run if there is no package.json file in the repository",
+									"properties": {
+										"nex:postclone": {
+											"type": "string",
+											"description": "Script to run after the repository is cloned"
+										}
+									},
+									"additionalProperties": false
 								}
 							},
 							"required": ["repository", "path"],
@@ -68,8 +79,7 @@
 						}
 					}
 				},
-				"required": ["template"],
-				"additionalProperties": false
+				"required": ["template"]
 			}
 		},
 		"templates": {
