@@ -58,7 +58,7 @@
 		"repositories": {
 			"description": "Repositories and their configurations",
 			"type": "object",
-			"items": {
+			"additionalProperties": {
 				"type": "object",
 				"description": "Dependency configuration",
 				"properties": {
@@ -86,12 +86,10 @@
 						"additionalProperties": false
 					}
 				},
-				"required": ["repository", "path"],
 				"additionalProperties": false
-			},
-			"additionalProperties": false
+			}
 		},
-"templates": {
+		"templates": {
 			"type": "object",
 			"description": "Templates that are available to be used in the projects",
 			"additionalProperties": {
