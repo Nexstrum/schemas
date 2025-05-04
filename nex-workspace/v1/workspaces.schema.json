@@ -50,47 +50,48 @@
 							"type": "string",
 							"description": "Repository name that must match an entry in the repositories section"
 						}
-					},
-					"repositories": {
-						"description": "Repositories and their configurations",
-						"type": "object",
-						"items": {
-							"type": "object",
-							"description": "Dependency configuration",
-							"properties": {
-								"repository": {
-									"type": "string",
-									"description": "URL of the Git repository"
-								},
-								"path": {
-									"type": "string",
-									"description": "Path where the repository should be cloned (relative to the active project)"
-								},
-								"branch": {
-									"type": "string",
-									"description": "Optional branch to check out"
-								},
-								"scripts": {
-									"type": "object",
-									"description": "Scripts to run if there is no package.json file in the repository",
-									"properties": {
-										"nex:postclone": {
-											"type": "string",
-											"description": "Script to run after the repository is cloned"
-										}
-									},
-									"additionalProperties": false
-								}
-							},
-							"required": ["repository", "path"],
-							"additionalProperties": false
-						}
 					}
 				},
 				"required": ["template"]
 			}
 		},
-		"templates": {
+		"repositories": {
+			"description": "Repositories and their configurations",
+			"type": "object",
+			"items": {
+				"type": "object",
+				"description": "Dependency configuration",
+				"properties": {
+					"repository": {
+						"type": "string",
+						"description": "URL of the Git repository"
+					},
+					"path": {
+						"type": "string",
+						"description": "Path where the repository should be cloned (relative to the active project)"
+					},
+					"branch": {
+						"type": "string",
+						"description": "Optional branch to check out"
+					},
+					"scripts": {
+						"type": "object",
+						"description": "Scripts to run if there is no package.json file in the repository",
+						"properties": {
+							"nex:postclone": {
+								"type": "string",
+								"description": "Script to run after the repository is cloned"
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"required": ["repository", "path"],
+				"additionalProperties": false
+			},
+			"additionalProperties": false
+		},
+"templates": {
 			"type": "object",
 			"description": "Templates that are available to be used in the projects",
 			"additionalProperties": {
