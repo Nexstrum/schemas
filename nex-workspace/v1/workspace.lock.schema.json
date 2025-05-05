@@ -83,13 +83,32 @@
 					"scripts": {
 						"type": "object",
 						"description": "Scripts to run if there is no package.json file in the repository",
-						"properties": {
-							"nex:postclone": {
-								"type": "string",
-								"description": "Script to run after the repository is cloned"
-							}
-						},
-						"additionalProperties": false
+						"additionalProperties": {
+							"oneOf": [
+								{
+									"type": "string",
+									"description": "Script to run after the repository is cloned"
+								},
+								{
+									"type": "object",
+									"properties": {
+										"mac": { "type": "string", "description": "Script to run after the repository is cloned on macOS" },
+										"lin": { "type": "string", "description": "Script to run after the repository is cloned on Linux" },
+										"win": { "type": "string", "description": "Script to run after the repository is cloned on Windows" },
+										"options": {
+											"type": "object",
+											"description": "Options for the script execution",
+											"properties": {
+												"error-on-stderr": { "type": "boolean", "description": "Whether to throw an error if the script writes to stderr" },
+												"verbose": { "type": "boolean", "description": "Whether to print verbose output" }
+											},
+											"additionalProperties": false
+										}
+									},
+									"additionalProperties": false
+								}
+							]
+						}
 					}
 				},
 				"additionalProperties": false
