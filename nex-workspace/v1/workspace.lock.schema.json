@@ -80,6 +80,10 @@
 						"type": "string",
 						"description": "Optional branch to check out"
 					},
+					"recursive": {
+						"type": "boolean",
+						"description": "If true, the repository will be cloned recursively"
+					},
 					"scripts": {
 						"type": "object",
 						"description": "Scripts to run if there is no package.json file in the repository",
